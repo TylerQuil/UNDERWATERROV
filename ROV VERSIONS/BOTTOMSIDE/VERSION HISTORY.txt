@@ -1,0 +1,10 @@
+VERSION 1 - Arduino
+Able to pull data from topside and power LEDs with values for each motor speed ranging from -255 - 255
+
+VERSION 2 - ESP32
+Able to use servo library to control three servos: one to sweep and two with presise control using Dpad
+
+VERSION 3* - ESP32
+Able to use Cytron motor driver library to control four motors
+
+*Not completed yet

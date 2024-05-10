@@ -1,0 +1,10 @@
+VERSION 1 - ESP32
+Able to take in controller inputs from xbox controller and control LEDs by itself
+
+VERSION 2&3 - ESP32
+Able to pass controller inputs from topside to bottomside
+
+VERSION 4* - ESP32
+Able to take data from the bottomside and print it out topside
+
+*Not completed yet
