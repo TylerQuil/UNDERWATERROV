@@ -1,5 +1,8 @@
 VERSION 1 - ESP32
-Able to take in controller inputs from xbox controller and control LEDs by itself
+Able to take in controller inputs from Xbox controller and control LEDs by itself
+
+VERSION 1.5 - ESP32
+Version 1 integrated with the Cytron Library to run as a test on the ESP PCB
 
 VERSION 2&3 - ESP32
 Able to pass controller inputs from topside to bottomside
