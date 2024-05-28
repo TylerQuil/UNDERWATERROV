@@ -18,14 +18,14 @@ int stop;
 int sweep;
 
 //MOTOR FUNCTION
-#define LEFTMOTOR1 12
-#define LEFTMOTOR2 14
-#define RIGHTMOTOR1 27
+#define LEFTMOTOR1 32
+#define LEFTMOTOR2 33
+#define RIGHTMOTOR1 25
 #define RIGHTMOTOR2 26
-#define FRONTMOTOR1 25
-#define FRONTMOTOR2 23
-#define BACKMOTOR1 32
-#define BACKMOTOR2 35
+#define FRONTMOTOR1 16
+#define FRONTMOTOR2 4
+#define BACKMOTOR1 0
+#define BACKMOTOR2 2
 #define TOLERANCE 50
 CytronMD motor1(PWM_PWM, LEFTMOTOR1, LEFTMOTOR2);
 CytronMD motor2(PWM_PWM, RIGHTMOTOR1, RIGHTMOTOR2);
@@ -35,7 +35,7 @@ CytronMD motor4(PWM_PWM, BACKMOTOR1, BACKMOTOR2);
 //SWEEP SERVO
 Servo myservo1;
 int pos1 = 0;
-int servo1Pin = 2;
+int servo1Pin = 12;
 int sweeptime = 500;
 int minimum = 1000;
 int maximum = 2000;
@@ -44,16 +44,16 @@ int maximum = 2000;
 Servo myservo2;
 Servo myservo3;
 int pos2 = 0;
-int servo2Pin = 19;
+int servo2Pin = 27;
 int pos3 = 0;
-int servo3Pin = 23;
+int servo3Pin = 14;
 
 
 void setup() {
   //I2C
   Wire.begin(slaveAddress);
   Wire.onReceive(receiveEvent);
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   //SERVOS
   // Allow allocation of all timers
@@ -132,10 +132,10 @@ void receiveEvent(int howMany) {
     dataArray[i] = Wire.read();
     lmotorf = dataArray[0];
     lmotor = map(lmotorf, 0, 255, -255, 255);
-    //Serial.print("lmotor = ");
-    //Serial.println(lmotor);
+    Serial.print("lmotor = ");
+    Serial.println(lmotor);
     rmotorf = dataArray[1];
-    rmotor = map(rmotorf, 255, 0, 255, -255);
+    rmotor = map(rmotorf, 0, 255, -255, 255);
     //Serial.print("rmotor = ");
     //Serial.println(rmotor);
     vert = dataArray[2];
@@ -145,8 +145,8 @@ void receiveEvent(int howMany) {
     //Serial.print("desc = ");
     //Serial.println(desc);
     pad = dataArray[4];
-    Serial.print("pad = ");
-    Serial.println(pad);
+    //Serial.print("pad = ");
+    //Serial.println(pad);
     stop = dataArray[5];
     //Serial.print("stop = ");
     //Serial.println(stop);
