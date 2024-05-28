@@ -74,7 +74,7 @@ void onDisconnectedController(ControllerPtr ctl) {
 void processGamepad(ControllerPtr ctl) {
 //FORMULATE MOTOR INPUTS AND STOP
   lmotor = map(ctl->axisY(), -511, 512, 255, 0);
-  //Serial.println(lmotor);
+  Serial.println(lmotor);
   rmotor = map(ctl->axisRY(), -511, 512, 255, 0);
   //Serial.println(rmotor);
   vert = map(ctl->throttle(), 0, 1023, 0, 255);
@@ -115,7 +115,7 @@ void processControllers() {
 // Arduino setup function. Runs in CPU 1
 void setup() {
   //CONTROLLER SETUP
-    Serial.begin(115200);
+    Serial.begin(9600);
     Serial.printf("Firmware: %s\n", BP32.firmwareVersion());
     const uint8_t* addr = BP32.localBdAddress();
     Serial.printf("BD Addr: %2X:%2X:%2X:%2X:%2X:%2X\n", addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
@@ -124,7 +124,7 @@ void setup() {
     BP32.forgetBluetoothKeys();
     BP32.enableVirtualDevice(false);
   //I2C SETUP
-  Wire.begin();
+  Wire.begin(22, 21);
 
 }
 
