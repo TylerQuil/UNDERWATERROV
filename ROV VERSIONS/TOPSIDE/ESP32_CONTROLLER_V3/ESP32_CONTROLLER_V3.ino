@@ -74,7 +74,7 @@ void onDisconnectedController(ControllerPtr ctl) {
 void processGamepad(ControllerPtr ctl) {
 //FORMULATE MOTOR INPUTS AND STOP
   lmotor = map(ctl->axisY(), -511, 512, 255, 0);
-  Serial.println(lmotor);
+  //Serial.println(lmotor);
   rmotor = map(ctl->axisRY(), -511, 512, 255, 0);
   //Serial.println(rmotor);
   vert = map(ctl->throttle(), 0, 1023, 0, 255);
@@ -96,8 +96,6 @@ void processGamepad(ControllerPtr ctl) {
     delay(500);
     exit(0);
     }
-   //SWEEP
-
 }
 
 void processControllers() {
@@ -115,7 +113,7 @@ void processControllers() {
 // Arduino setup function. Runs in CPU 1
 void setup() {
   //CONTROLLER SETUP
-    Serial.begin(9600);
+    Serial.begin(57600); //TRY 115000 BAUD
     Serial.printf("Firmware: %s\n", BP32.firmwareVersion());
     const uint8_t* addr = BP32.localBdAddress();
     Serial.printf("BD Addr: %2X:%2X:%2X:%2X:%2X:%2X\n", addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
@@ -124,8 +122,7 @@ void setup() {
     BP32.forgetBluetoothKeys();
     BP32.enableVirtualDevice(false);
   //I2C SETUP
-  Wire.begin(22, 21);
-
+  Wire.begin();
 }
 
 // Arduino loop function. Runs in CPU 1.
@@ -137,14 +134,14 @@ void loop() {
         processControllers();
     delay(150);
 
-//I2C
-byte dataArray[7] = {lmotor, rmotor, vert, desc, pad, stop, sweep};
-int size = sizeof(dataArray);
-  Wire.beginTransmission(slaveAddress); //address is queued for checking if the slave is present
-    for (int i=0; i<size; i++) {
-      Wire.write(dataArray[i]);  //data bytes are queued in local buffer
-      Wire.endTransmission(); //all the above queued bytes are sent to slave on ACK handshaking
-  }
+    //I2C
+    byte dataArray[7] = {lmotor, rmotor, vert, desc, pad, stop, sweep};
+    int size = sizeof(dataArray);
+    Wire.beginTransmission(slaveAddress); //address is queued for checking if the slave is present
+      for (int i=0; i<size; i++) {
+        Wire.write(dataArray[i]);  //data bytes are queued in local buffer
+      }
+    Wire.endTransmission(); //all the above queued bytes are sent to slave on ACK handshaking
 }
 
 
